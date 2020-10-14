@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
 import { getRepository } from 'typeorm';
-import orphanageView from '../views/orphanagesView';
+import * as Yup from 'yup';
 
+import orphanageView from '../views/orphanagesView';
 import Orphanage from '../models/Orphanage';
 
 export default {
-
+    // LIST ALL
     async index(request: Request, response: Response){
         const orphanageRepository = getRepository(Orphanage);
 
@@ -16,6 +17,7 @@ export default {
         return response.json(orphanageView.renderMany(orphanages));
     },
 
+    // LIST ONE
     async show(request: Request, response: Response){
         const { id } = request.params;
         const orphanageRepository = getRepository(Orphanage);
@@ -27,6 +29,7 @@ export default {
         return response.json(orphanageView.render(orphanage));
     },
 
+    // CREATE ONE
     async create(request: Request, response: Response){
         const {
             name, 
@@ -45,7 +48,7 @@ export default {
             return { path: image.filename}
         })
 
-        const orphanage = orphanagesRepository.create({
+        const data = {
             name, 
             latitude, 
             longitude, 
@@ -54,7 +57,9 @@ export default {
             opening_hours, 
             open_on_weekends,
             images
-        });
+        };
+
+        const orphanage = orphanagesRepository.create(data);
     
         await orphanagesRepository.save(orphanage);
     
