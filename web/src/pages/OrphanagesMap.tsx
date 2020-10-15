@@ -5,16 +5,11 @@ import { Map, TileLayer , Marker, Popup} from 'react-leaflet';
 import Leaflet from 'leaflet';
 
 import mapMarkerImg from '../images/map-marker.svg';
+import mapIcon from "../utils/mapIcon";
 
 import '../styles/pages/orphanages-map.css';
 import 'leaflet/dist/leaflet.css';
 
-const mapIcon = Leaflet.icon({
-    iconUrl: mapMarkerImg,
-    iconSize:[48,60],
-    iconAnchor: [24,60],
-    popupAnchor: [170, 2]
-})
 
 function OrphanagesMap() {
     return (
